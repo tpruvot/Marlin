@@ -1524,7 +1524,9 @@ void setup() {
   #endif
 
   #if ENABLED(BLTOUCH)
-    SETUP_RUN(bltouch.init(/*set_voltage=*/true));
+    //not required, slow and made on G28
+    //SETUP_RUN(bltouch.init(/*set_voltage=*/true));
+    SETUP_RUN(bltouch._reset());
   #endif
 
   #if ENABLED(MAGLEV4)

@@ -1592,6 +1592,9 @@ void prepare_line_to_destination() {
     //
     #if HOMING_Z_WITH_PROBE
       if (axis == Z_AXIS) {
+        #ifdef BLTOUCH_EMI_X
+          X_disable(); // workaround for the antclabs EMI noise
+        #endif
         if (TERN0(BLTOUCH, bltouch.deploy())) return;   // BLTouch was deployed above, but get the alarm state.
         if (TERN0(PROBE_TARE, probe.tare())) return;
       }

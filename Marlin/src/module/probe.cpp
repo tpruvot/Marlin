@@ -73,7 +73,7 @@
   #include "../feature/tmc_util.h"
 #endif
 
-#if QUIET_PROBING
+#if QUIET_PROBING || HOMING_Z_WITH_PROBE
   #include "stepper/indirection.h"
 #endif
 
@@ -692,6 +692,10 @@ float Probe::probe_at_point(const float &rx, const float &ry, const ProbePtRaise
 
   // Move the probe to the starting XYZ
   do_blocking_move_to(npos);
+
+  #ifdef BLTOUCH_EMI_X
+    X_disable(); // Antclabs EMI noise (not seen on the 3DTouch)
+  #endif
 
   float measured_z = NAN;
   if (!deploy()) measured_z = run_z_probe(sanity_check) + offset.z;

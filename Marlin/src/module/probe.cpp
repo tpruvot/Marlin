@@ -48,7 +48,7 @@
   #include "delta.h"
 #endif
 
-#if ANY(HAS_QUIET_PROBING, USE_SENSORLESS)
+#if ANY(HAS_QUIET_PROBING, USE_SENSORLESS, HOMING_Z_WITH_PROBE)
   #include "stepper/indirection.h"
   #if BOTH(HAS_QUIET_PROBING, PROBING_ESTEPPERS_OFF)
     #include "stepper.h"
@@ -824,6 +824,9 @@ float Probe::probe_at_point(const_float_t rx, const_float_t ry, const ProbePtRai
   do_blocking_move_to(npos, feedRate_t(XY_PROBE_FEEDRATE_MM_S));
 
   float measured_z = NAN;
+  #ifdef BLTOUCH_EMI_X
+    X_disable(); // Antclabs EMI noise (not seen on the 3DTouch)
+  #endif
   if (!deploy()) {
     measured_z = run_z_probe(sanity_check) + offset.z;
     TERN_(HAS_PTC, ptc.apply_compensation(measured_z));

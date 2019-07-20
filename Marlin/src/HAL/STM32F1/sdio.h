@@ -100,7 +100,11 @@
 #define SDIO_DATA_TIMEOUT                    100U           /* Read data transfer timeout */
 #define SDIO_WRITE_TIMEOUT                   200U           /* Write data transfer timeout */
 
+#ifdef OVERCLOCK
+#define SDIO_CLOCK ((18000000*OC_BASE_MHZ)/OC_TARGET_MHZ)   /* 18 MHz */
+#else
 #define SDIO_CLOCK                           18000000       /* 18 MHz */
+#endif
 
 // ------------------------
 // Types

@@ -33,7 +33,7 @@
  *   B<baudrate> - Baud rate (bits per second)
  */
 void GcodeSuite::M575() {
-  const int32_t baud = parser.ulongval('B');
+  int32_t baud = parser.ulongval('B');
   switch (baud) {
     case 2400: case 9600: case 19200: case 38400: case 57600:
     case 115200: case 250000: case 500000: case 1000000: {
@@ -59,6 +59,10 @@ void GcodeSuite::M575() {
       #endif
 
       SERIAL_FLUSH();
+
+      #ifdef OVERCLOCK
+        baud = (baud*OC_BASE_MHZ)/OC_TARGET_MHZ;
+      #endif
 
       if (set0) { MYSERIAL0.end(); MYSERIAL0.begin(baud); }
 

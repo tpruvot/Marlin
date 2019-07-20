@@ -878,10 +878,16 @@ void setup() {
     disableStepperDrivers();
   #endif
 
+  #ifdef OVERCLOCK
+    #define CLOCKRATE ((BAUDRATE*OC_BASE_MHZ)/OC_TARGET_MHZ)
+  #else
+    #define CLOCKRATE BAUDRATE
+  #endif
+
   #if NUM_SERIAL > 0
-    MYSERIAL0.begin(BAUDRATE);
+    MYSERIAL0.begin(CLOCKRATE);
     #if NUM_SERIAL > 1
-      MYSERIAL1.begin(BAUDRATE);
+      MYSERIAL1.begin(CLOCKRATE);
     #endif
   #endif
 

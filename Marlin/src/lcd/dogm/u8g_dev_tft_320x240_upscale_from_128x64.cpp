@@ -118,6 +118,9 @@
 #ifndef TFT_MARLINBG_COLOR
   #define TFT_MARLINBG_COLOR COLOR_BLACK
 #endif
+#ifndef TFT_TOPICONS_COLOR
+  #define TFT_TOPICONS_COLOR COLOR_BLUE
+#endif
 #ifndef TFT_DISABLED_COLOR
   #define TFT_DISABLED_COLOR COLOR_DARK
 #endif
@@ -148,6 +151,97 @@ static const uint8_t clear_screen_sequence[] = {
   U8G_ESC_ADR(0), LCD_WRITE_RAM, U8G_ESC_ADR(1),
   U8G_ESC_END
 };
+
+#if ENABLED(SDIO_SUPPORT) && ENABLED(CUSTOM_STATUS_SCREEN_IMAGE)
+  #define DYNAMIC_DEV_ICONS
+  #include "../ultralcd.h"
+  #include "../../sd/cardreader.h"
+  #include "../../gcode/gcode.h"
+  #include "../../module/configuration_store.h"
+  static bool sd, usb;
+  static int8_t reset = -1;
+
+  #if HAS_FILAMENT_SENSOR
+    #include "../../feature/runout.h"
+    static bool fs;
+  #endif
+#endif // SDIO_SUPPORT
+
+#ifdef DYNAMIC_DEV_ICONS
+
+  static const uint8_t sd_sequence[] = {
+    U8G_ESC_ADR(0), LCD_COLUMN, U8G_ESC_ADR(1), U8G_ESC_DATA(32), U8G_ESC_DATA(63),
+    U8G_ESC_ADR(0), LCD_ROW,    U8G_ESC_ADR(1), U8G_ESC_DATA(8), U8G_ESC_DATA(31),
+    U8G_ESC_ADR(0), LCD_WRITE_RAM, U8G_ESC_ADR(1),
+    U8G_ESC_END
+  };
+
+  static const uint8_t usb_sequence[] = {
+    U8G_ESC_ADR(0), LCD_COLUMN, U8G_ESC_ADR(1), U8G_ESC_DATA(72), U8G_ESC_DATA(119),
+    U8G_ESC_ADR(0), LCD_ROW,    U8G_ESC_ADR(1), U8G_ESC_DATA(8), U8G_ESC_DATA(31),
+    U8G_ESC_ADR(0), LCD_WRITE_RAM, U8G_ESC_ADR(1),
+    U8G_ESC_END
+  };
+
+  static const uint8_t fs_sequence[] = {
+    U8G_ESC_ADR(0), LCD_COLUMN, U8G_ESC_ADR(1), U8G_ESC_DATA(135), U8G_ESC_DATA(166),
+    U8G_ESC_ADR(0), LCD_ROW,    U8G_ESC_ADR(1), U8G_ESC_DATA(8), U8G_ESC_DATA(31),
+    U8G_ESC_ADR(0), LCD_WRITE_RAM, U8G_ESC_ADR(1),
+    U8G_ESC_END
+  };
+
+  static const uint8_t settings_sequence[] = {
+    U8G_ESC_ADR(0), LCD_COLUMN, U8G_ESC_ADR(1), U8G_ESC_DATA(246), U8G_ESC_DATA(293),
+    U8G_ESC_ADR(0), LCD_ROW,    U8G_ESC_ADR(1), U8G_ESC_DATA(8), U8G_ESC_DATA(31),
+    U8G_ESC_ADR(0), LCD_WRITE_RAM, U8G_ESC_ADR(1),
+    U8G_ESC_END
+  };
+
+  static const uint8_t sd_logo[] = {
+    B00000000,B00000000,
+    B01110011,B11000000,
+    B10001001,B00100000,
+    B10000001,B00100000,
+    B01110001,B00100000,
+    B00001001,B00100000,
+    B10001001,B00100000,
+    B01110011,B11000000,
+  };
+
+  static const uint8_t usb_logo[] = {
+    B00000000,B00000000,B00000000,
+    B10001001,B11001111,B00000000,
+    B10001010,B00101000,B10000000,
+    B10001010,B00001000,B10000000,
+    B10001001,B11001111,B00000000,
+    B10001000,B00101000,B10000000,
+    B10001010,B00101000,B10000000,
+    B01110001,B11001111,B00000000,
+  };
+
+  static const uint8_t fs_logo[] = {
+    B00000000,B00000000,
+    B11111001,B11100000,
+    B10000010,B00000000,
+    B10000010,B00000000,
+    B11100001,B11000000,
+    B10000000,B00100000,
+    B10000000,B00100000,
+    B10000011,B11000000,
+  };
+
+  static const uint8_t reset_logo[] = {
+    B00000000,B00000000,B00000000,
+    B11110001,B11101111,B10000000,
+    B10001010,B00000010,B00000000,
+    B10001010,B00000010,B00000000,
+    B11110001,B11000010,B00000000,
+    B10100000,B00100010,B00000000,
+    B10010000,B00100010,B00000000,
+    B10001011,B11000010,B00000000,
+  };
+
+#endif
 
 #if ENABLED(TOUCH_BUTTONS)
 
@@ -499,6 +593,31 @@ uint8_t u8g_dev_tft_320x240_upscale_from_128x64_fn(u8g_t *u8g, u8g_dev_t *dev, u
 
     case U8G_DEV_MSG_PAGE_FIRST:
       page = 0;
+      #ifdef DYNAMIC_DEV_ICONS
+        // top icons
+        if (sd != card.isMounted() || usb != usb_serial_connected || !ui.on_status_screen()) {
+          sd = card.isMounted();
+          usb = usb_serial_connected;
+          u8g_WriteEscSeqP(u8g, dev, sd_sequence);
+          drawImage(sd_logo, u8g, dev, 16, 8, sd ? TFT_TOPICONS_COLOR : TFT_DISABLED_COLOR);
+          u8g_WriteEscSeqP(u8g, dev, usb_sequence);
+          drawImage(usb_logo, u8g, dev, 24, 8, usb ? TFT_TOPICONS_COLOR : TFT_DISABLED_COLOR);
+        }
+        #if HAS_FILAMENT_SENSOR
+          if (runout.enabled && (fs == runout.filament_ran_out || !ui.on_status_screen())) {
+            fs = !runout.filament_ran_out;
+            u8g_WriteEscSeqP(u8g, dev, fs_sequence);
+            drawImage(fs_logo, u8g, dev, 16, 8, fs ? TFT_DISABLED_COLOR : COLOR_RED);
+          }
+        #endif
+        #if ENABLED(EEPROM_SETTINGS)
+          if (reset != int(settings.was_reset) || !ui.on_status_screen()) {
+            reset = settings.was_reset ? 1 : 0;
+            u8g_WriteEscSeqP(u8g, dev, settings_sequence);
+            drawImage(reset_logo, u8g, dev, 24, 8, !reset ? TFT_DISABLED_COLOR : COLOR_RED);
+          }
+        #endif
+      #endif
       u8g_WriteEscSeqP(u8g, dev, page_first_sequence);
       break;
 

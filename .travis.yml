@@ -8,42 +8,46 @@ python:
 notifications:
   email: false
 
+cache:
+  apt: true
+  pip: true
+  directories:
+  - "~/.platformio"
+
 env:
   # Base Environments
-  - TEST_PLATFORM="DUE"
+  #- TEST_PLATFORM="DUE"
   - TEST_PLATFORM="esp32"
   - TEST_PLATFORM="linux_native"
-  - TEST_PLATFORM="megaatmega2560"
+  #- TEST_PLATFORM="megaatmega2560"
+  - TEST_PLATFORM="STM32F103RE"
   - TEST_PLATFORM="teensy31"
-  - TEST_PLATFORM="teensy35"
+  #- TEST_PLATFORM="teensy35"
 
   # Extended AVR Environments
-  - TEST_PLATFORM="fysetc_f6_13"
+  #- TEST_PLATFORM="fysetc_f6_13"
   - TEST_PLATFORM="megaatmega1280"
-  - TEST_PLATFORM="rambo"
+  #- TEST_PLATFORM="rambo"
   - TEST_PLATFORM="sanguino_atmega1284p"
-  - TEST_PLATFORM="sanguino_atmega644p"
+  #- TEST_PLATFORM="sanguino_atmega644p"
 
   # Extended STM32 Environments
   - TEST_PLATFORM="STM32F103RC_bigtree"
-  - TEST_PLATFORM="STM32F103RC_bigtree_USB"
-  - TEST_PLATFORM="STM32F103RE_bigtree"
-  - TEST_PLATFORM="STM32F103RE_bigtree_USB"
   - TEST_PLATFORM="STM32F103RC_fysetc"
-  - TEST_PLATFORM="jgaurora_a5s_a1"
+  #- TEST_PLATFORM="jgaurora_a5s_a1"
   - TEST_PLATFORM="STM32F103VE_longer"
   - TEST_PLATFORM="STM32F407VE_black"
   - TEST_PLATFORM="BIGTREE_SKR_PRO"
   - TEST_PLATFORM="mks_robin"
-  - TEST_PLATFORM="ARMED"
+  #- TEST_PLATFORM="ARMED"
 
   # STM32 with non-STM framework. both broken for now. they should use HAL_STM32 which is working.
   #- TEST_PLATFORM="STM32F4"
   #- TEST_PLATFORM="STM32F7"
 
   # Put lengthy tests last
-  - TEST_PLATFORM="LPC1768"
-  - TEST_PLATFORM="LPC1769"
+  #- TEST_PLATFORM="LPC1768"
+  #- TEST_PLATFORM="LPC1769"
 
   # Non-working environment tests
   #- TEST_PLATFORM="BIGTREE_BTT002" this board isn't released yet. we need pinout to be sure about what we do

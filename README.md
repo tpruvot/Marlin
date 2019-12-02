@@ -2,15 +2,26 @@
 
 # Marlin 3D Printer Firmware
 
-[![Build Status](https://travis-ci.org/MarlinFirmware/Marlin.svg?branch=2.0.x)](https://travis-ci.org/MarlinFirmware/Marlin)
-![GitHub](https://img.shields.io/github/license/marlinfirmware/marlin.svg)
-![GitHub contributors](https://img.shields.io/github/contributors/marlinfirmware/marlin.svg)
-![GitHub Release Date](https://img.shields.io/github/release-date/marlinfirmware/marlin.svg)
+[![Build Status](https://travis-ci.org/tpruvot/Marlin.svg?branch=master)](https://travis-ci.org/tpruvot/Marlin)
+![GitHub](https://img.shields.io/github/license/tpruvot/marlin.svg)
+![GitHub contributors](https://img.shields.io/github/contributors/tpruvot/marlin.svg)
+![GitHub Release Date](https://img.shields.io/github/release-date/tpruvot/marlin.svg)
 
 _Marlin_ is a firmware for RepRap machines, also known as _3D printers_. firmware to the next level by adding support for much faster 32-bit and ARM-based boards while improving support for 8-bit AVR boards through the use of a "hardware abstraction layer."
 
 Additional documentation can be found at the [Marlin Home Page](http://marlinfw.org/).
+
 Please let us know if Marlin misbehaves in any way. Volunteers are standing by!
+
+## Marlin 2.0 alfawise branch
+
+__Not for production use. Use with caution!__
+
+Marlin 2.0 takes this popular RepRap firmware to the next level by adding support for much faster 32-bit and ARM-based boards while improving support for 8-bit AVR boards. Read about Marlin's decision to use a "Hardware Abstraction Layer" below.
+
+This branch is for patches to the latest 2.0.x release version. Periodically this branch will form the basis for the next minor 2.0.x release.
+
+Download earlier versions of Marlin on the [Releases page](https://github.com/MarlinFirmware/Marlin/releases).
 
 ## Building Marlin
 

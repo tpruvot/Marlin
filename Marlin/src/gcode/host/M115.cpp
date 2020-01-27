@@ -37,6 +37,8 @@
  */
 void GcodeSuite::M115() {
 
+  usb_serial_connected = true;
+
   SERIAL_ECHOLNPGM(MSG_M115_REPORT);
 
   #if ENABLED(EXTENDED_CAPABILITIES_REPORT)

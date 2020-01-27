@@ -9,8 +9,11 @@ set -e
 use_example_configs Alfawise/U20
 opt_set MOTHERBOARD BOARD_LONGER3D_LK
 opt_set SERIAL_PORT 1
-opt_enable BAUD_RATE_GCODE
-exec_test $1 $2 "Full-featured U20 config"
+exec_test $1 $2 "Standard U20 config"
+
+restore_configs
+use_example_configs Alfawise/U20-bltouch
+exec_test $1 $2 "BLTouch U20 config"
 
 # cleanup
 restore_configs

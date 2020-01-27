@@ -154,8 +154,9 @@ static uint32_t lcd_id = 0;
   #include "../ultralcd.h"
   #include "../../sd/cardreader.h"
   #include "../../gcode/gcode.h"
+  #include "../../module/planner.h"
   #include "../../module/configuration_store.h"
-  static bool sd, usb;
+  static bool sd, usb, bl;
   static int8_t reset = -1;
 
   #if HAS_FILAMENT_SENSOR
@@ -197,6 +198,17 @@ static uint32_t lcd_id = 0;
     B10000000,B00100000,
     B10000000,B00100000,
     B10000011,B11000000,
+  };
+
+  static const uint8_t bl_logo[] = {
+    B00000000,B00000000,
+    B11110010,B00000000,
+    B10001010,B00000000,
+    B10001010,B00000000,
+    B11110010,B00000000,
+    B10001010,B00000000,
+    B10001010,B00000000,
+    B11110011,B11100000,
   };
 
   static const uint8_t reset_logo[] = {
@@ -744,6 +756,13 @@ uint8_t u8g_dev_tft_320x240_upscale_from_128x64_fn(u8g_t *u8g, u8g_dev_t *dev, u
             fs = !runout.filament_ran_out;
             setWindow(u8g, dev, 135, 8, 166, 31);
             drawImage(fs_logo, u8g, dev, 16, 8, fs ? TFT_DISABLED_COLOR : COLOR_RED);
+          }
+        #endif
+        #if HAS_LEVELING
+          if (bl != planner.leveling_active || !ui.on_status_screen() || reset == -1) {
+            bl = planner.leveling_active;
+            setWindow(u8g, dev, 189, 8, 220, 31);
+            drawImage(bl_logo, u8g, dev, 16, 8, bl ? TFT_TOPICONS_COLOR : TFT_DISABLED_COLOR);
           }
         #endif
         #if ENABLED(EEPROM_SETTINGS)

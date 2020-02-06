@@ -66,6 +66,8 @@ uint8_t GcodeSuite::axis_relative = (
   | (ar_init.e ? _BV(REL_E) : 0)
 );
 
+bool usb_serial_connected = false;
+
 #if ENABLED(HOST_KEEPALIVE_FEATURE)
   GcodeSuite::MarlinBusyState GcodeSuite::busy_state = NOT_BUSY;
   uint8_t GcodeSuite::host_keepalive_interval = DEFAULT_KEEPALIVE_INTERVAL;

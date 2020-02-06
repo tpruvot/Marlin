@@ -1,9 +1,10 @@
 # Marlin 3D Printer Firmware
 
-![GitHub](https://img.shields.io/github/license/marlinfirmware/marlin.svg)
-![GitHub contributors](https://img.shields.io/github/contributors/marlinfirmware/marlin.svg)
-![GitHub Release Date](https://img.shields.io/github/release-date/marlinfirmware/marlin.svg)
-[![Build Status](https://github.com/MarlinFirmware/Marlin/workflows/CI/badge.svg?branch=bugfix-2.0.x)](https://github.com/MarlinFirmware/Marlin/actions)
+## for Longer3D LK1/LK2 & Alfawise U20/U20+/U30
+
+[![Build Status](https://travis-ci.org/tpruvot/Marlin.svg?branch=dev)](https://travis-ci.org/tpruvot/Marlin)
+![GitHub](https://img.shields.io/github/license/tpruvot/marlin.svg)
+![GitHub contributors](https://img.shields.io/github/contributors/tpruvot/marlin.svg)
 
 <img align="right" width=175 src="buildroot/share/pixmaps/logo/marlin-250.png" />
 
@@ -18,7 +19,7 @@ Marlin 2.0 takes this popular RepRap firmware to the next level by adding suppor
 
 This branch is for patches to the latest 2.0.x release version. Periodically this branch will form the basis for the next minor 2.0.x release.
 
-Download earlier versions of Marlin on the [Releases page](https://github.com/MarlinFirmware/Marlin/releases).
+Download earlier versions of Marlin on the [Releases page](https://github.com/tpruvot/Marlin/releases).
 
 ## Building Marlin 2.0
 

@@ -25,7 +25,7 @@
  * Release version. Leave the Marlin version or apply a custom scheme.
  */
 #ifndef SHORT_BUILD_VERSION
-  #define SHORT_BUILD_VERSION "2.0.2-Longer3D"
+  #define SHORT_BUILD_VERSION "2.0.3-Longer3D"
 #endif
 
 /**

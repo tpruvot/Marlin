@@ -66,6 +66,8 @@ uint8_t GcodeSuite::axis_relative = (
   | (ar_init.e ? _BV(REL_E) : 0)
 );
 
+bool usb_serial_connected = false;
+
 #if HAS_AUTO_REPORTING || ENABLED(HOST_KEEPALIVE_FEATURE)
   bool GcodeSuite::autoreport_paused; // = false
 #endif

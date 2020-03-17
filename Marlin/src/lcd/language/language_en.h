@@ -549,6 +549,10 @@ namespace Language_en {
   PROGMEM Language_Str MSG_SNAKE                           = _UxGT("Sn4k3");
   PROGMEM Language_Str MSG_MAZE                            = _UxGT("Maze");
 
+  // FSMC/SPI Touchscreen
+  PROGMEM Language_Str MSG_TOUCHSCREEN                     = _UxGT("Touchscreen");
+  PROGMEM Language_Str MSG_CALIBRATION                     = _UxGT("Calibration");
+
   #define MSG_1_LINE(A)     A "\0"   "\0"
   #define MSG_2_LINE(A,B)   A "\0" B "\0"
   #define MSG_3_LINE(A,B,C) A "\0" B "\0" C

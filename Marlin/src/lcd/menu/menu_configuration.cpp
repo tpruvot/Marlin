@@ -47,6 +47,10 @@
   #endif
 #endif
 
+#if ENABLED(TOUCH_CALIBRATION)
+  #include "../../feature/touch/calibration.h"
+#endif
+
 #define HAS_DEBUG_MENU ENABLED(LCD_PROGRESS_BAR_TEST)
 
 void menu_advanced_settings();
@@ -387,6 +391,10 @@ void menu_configuration() {
     SUBMENU(MSG_PREHEAT_2_SETTINGS, menu_preheat_material2_settings);
   #endif
 
+  #if ENABLED(TOUCH_CALIBRATION)
+    MENU_ITEM(submenu, MSG_TOUCHSCREEN, menu_touchscreen);
+  #endif
+
   #if ENABLED(EEPROM_SETTINGS)
     ACTION_ITEM(MSG_STORE_EEPROM, lcd_store_settings);
     if (!busy)
@@ -399,6 +407,7 @@ void menu_configuration() {
       #if HAS_BUZZER
         ui.completion_feedback();
       #endif
+      ui.refresh(LCDVIEW_CALL_REDRAW_NEXT);
     });
 
   END_MENU();

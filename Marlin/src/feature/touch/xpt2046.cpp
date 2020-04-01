@@ -43,6 +43,10 @@
 XPT2046 touch;
 extern int8_t encoderDiff;
 
+#if ENABLED(TOUCH_CALIBRATION)
+  #include "calibration.h"
+#endif
+
 void XPT2046::init() {
   SET_INPUT(TOUCH_MISO_PIN);
   SET_OUTPUT(TOUCH_MOSI_PIN);
@@ -62,6 +66,13 @@ void XPT2046::init() {
 
 uint8_t XPT2046::read_buttons() {
   int16_t tsoffsets[4] = { 0 };
+
+  #if ENABLED(TOUCH_CALIBRATION)
+    tsoffsets[0] = calibration.results[0];
+    tsoffsets[1] = calibration.results[1];
+    tsoffsets[2] = calibration.results[2];
+    tsoffsets[3] = calibration.results[3];
+  #endif
 
   if (tsoffsets[0] + tsoffsets[1] == 0) {
     // Not yet set, so use defines as fallback...

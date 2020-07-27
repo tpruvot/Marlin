@@ -801,12 +801,16 @@ void MarlinUI::draw_status_screen() {
   #define EXTRAS_2_BASELINE (EXTRAS_BASELINE + 3)
 
   if (PAGE_CONTAINS(EXTRAS_2_BASELINE - INFO_FONT_ASCENT, EXTRAS_2_BASELINE - 1)) {
-    set_font(FONT_MENU);
-    lcd_put_wchar(3, EXTRAS_2_BASELINE, LCD_STR_FEEDRATE[0]);
+    //set_font(FONT_MENU); // confusing Fr 100% to 1.00x
+    //lcd_put_wchar(3, EXTRAS_2_BASELINE, LCD_STR_FEEDRATE[0]);
 
     set_font(FONT_STATUSMENU);
-    lcd_put_u8str(12, EXTRAS_2_BASELINE, i16tostr3rj(feedrate_percentage));
-    lcd_put_wchar('%');
+    //lcd_put_u8str(12, EXTRAS_2_BASELINE, i16tostr3rj(feedrate_percentage));
+    //lcd_put_wchar('%');
+
+    lcd_moveto(3, EXTRAS_2_BASELINE);
+    lcd_put_u8str(ftostr12ns(0.01 * feedrate_percentage));
+    lcd_put_wchar('x');
 
     //
     // Filament sensor display if SD is disabled

@@ -1549,7 +1549,7 @@ void MarlinUI::update() {
         encoderDiff = epps * ydir;
       else if (screen_items > 0) {
         // Last 3 cols act as a scroll :-)
-        if (col > (LCD_WIDTH) - 5)
+        if (col > (LCD_WIDTH) - 3)
           // 2 * LCD_HEIGHT to scroll to bottom of next page. (LCD_HEIGHT would only go 1 item down.)
           encoderDiff = epps * (encoderLine - encoderTopLine + 2 * (LCD_HEIGHT)) * ydir;
         else

@@ -61,6 +61,10 @@ void GcodeSuite::M575() {
 
       SERIAL_FLUSH();
 
+      #ifdef OVERCLOCK
+        baud = (baud*OC_BASE_MHZ)/OC_TARGET_MHZ;
+      #endif
+
       if (set0) { MYSERIAL1.end(); MYSERIAL1.begin(baud); }
 
       #if HAS_MULTI_SERIAL

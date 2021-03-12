@@ -247,6 +247,7 @@ void _lcd_draw_homing();
 #endif
 
 #if ENABLED(TOUCH_SCREEN_CALIBRATION)
+  void menu_touch_screen();
   void touch_screen_calibration();
 #endif
 

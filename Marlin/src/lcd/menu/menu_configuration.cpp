@@ -423,6 +423,10 @@ void menu_configuration() {
     EDIT_ITEM(bool, MSG_SOUND, &ui.buzzer_enabled, []{ ui.chirp(); });
   #endif
 
+  #if ENABLED(TOUCH_SCREEN_CALIBRATION)
+    SUBMENU(MSG_TOUCHSCREEN, menu_touch_screen);
+  #endif
+
   #if ENABLED(EEPROM_SETTINGS)
     ACTION_ITEM(MSG_STORE_EEPROM, ui.store_settings);
     if (!busy) ACTION_ITEM(MSG_LOAD_EEPROM, ui.load_settings);

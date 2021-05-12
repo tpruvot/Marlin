@@ -94,7 +94,7 @@
 // @section info
 
 // Author info of this build printed to the host during boot and M115
-#define STRING_CONFIG_H_AUTHOR "tpruvot"// Who made the changes.
+#define STRING_CONFIG_H_AUTHOR "SupraDolph"// Who made the changes.
 //#define CUSTOM_VERSION_FILE Version.h // Path from the root directory (no quotes)
 
 /**
@@ -553,9 +553,9 @@
     // Use the command M303 E0 S200 C8 if you make changes to your extruder.
 
     // Alfawise U30/U20
-    #define DEFAULT_Kp 17.22
-    #define DEFAULT_Ki 1.00
-    #define DEFAULT_Kd 74.22
+    #define DEFAULT_Kp 15.39
+    #define DEFAULT_Ki 0.83
+    #define DEFAULT_Kd 71.24
   #endif
 
 #endif // PIDTEMP
@@ -599,19 +599,19 @@
   //#define DEFAULT_bedKi .023
   //#define DEFAULT_bedKd 305.4
 
-  #if defined(U30) || defined(LK2) || defined(LK4)
-    // From M303 command for Alfawise U30
-    #define DEFAULT_bedKp 338.46
-    #define DEFAULT_bedKi 63.96
-    #define DEFAULT_bedKd 447.78
-  #endif
+#if defined(U30) || defined(LK2) || defined(LK4)
+  //From M303 command for Alfawise U30 :
+  #define DEFAULT_bedKp 225.38
+  #define DEFAULT_bedKi 40.75
+  #define DEFAULT_bedKd 311.68
+#endif
 
-  #if defined(U20) || defined(LK1)
-    // From M303 command for Alfawise U20
-    #define DEFAULT_bedKp 841.68
-    #define DEFAULT_bedKi 152.12
-    #define DEFAULT_bedKd 1164.25
-  #endif
+#if defined(U20) || defined(LK1)
+  //From M303 command for Alfawise U20 :
+  #define DEFAULT_bedKp 841.68
+  #define DEFAULT_bedKi 152.12
+  #define DEFAULT_bedKd 1164.25
+#endif
 
   #ifdef U20_PLUS
     // These PID setting MUST be updated.
@@ -1782,15 +1782,21 @@
 //
 #define PREHEAT_1_LABEL       "PLA"
 #define PREHEAT_1_TEMP_HOTEND 200
-#define PREHEAT_1_TEMP_BED     60
+#define PREHEAT_1_TEMP_BED     50
 #define PREHEAT_1_TEMP_CHAMBER 35
 #define PREHEAT_1_FAN_SPEED     0 // Value from 0 to 255
 
-#define PREHEAT_2_LABEL       "ABS"
-#define PREHEAT_2_TEMP_HOTEND 250
-#define PREHEAT_2_TEMP_BED    100
+#define PREHEAT_2_LABEL       "PETG"
+#define PREHEAT_2_TEMP_HOTEND 235
+#define PREHEAT_2_TEMP_BED     60
 #define PREHEAT_2_TEMP_CHAMBER 35
 #define PREHEAT_2_FAN_SPEED     0 // Value from 0 to 255
+
+#define PREHEAT_3_LABEL       "TPU"
+#define PREHEAT_3_TEMP_HOTEND 210
+#define PREHEAT_3_TEMP_BED     60
+#define PREHEAT_3_TEMP_CHAMBER 35
+#define PREHEAT_3_FAN_SPEED     0 // Value from 0 to 255
 
 /**
  * Nozzle Park

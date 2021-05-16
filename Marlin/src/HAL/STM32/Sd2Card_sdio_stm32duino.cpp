@@ -84,6 +84,11 @@ DMA_HandleTypeDef hdma_sdio;
   #define SDIO_CLOCK 18000000 // 18 MHz
 #endif
 
+#ifdef OVERCLOCK
+  #undef SDIO_CLOCK
+  #define SDIO_CLOCK ((18000000*OC_BASE_MHZ)/OC_TARGET_MHZ)
+#endif
+
 // SDIO retries, configurable. Default is 3, from STM32F1
 #ifndef SDIO_READ_RETRIES
   #define SDIO_READ_RETRIES 3

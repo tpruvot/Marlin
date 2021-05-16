@@ -125,6 +125,8 @@ const uint32_t analogInputPin[] = {
   37, // A15, PC5
 };
 
+uint16_t VariantCoreClock; // in MHz
+
 /******************************************************************************/
 /*            PLL (clocked by HSE) used as System clock source                */
 /******************************************************************************/
@@ -148,7 +150,24 @@ static bool SetSysClock_PLL_HSE(bool bypass)
   RCC_OscInitStruct.PLL.PLLSource  = RCC_PLLSOURCE_HSE;
   RCC_OscInitStruct.PLL.PLLMUL     = RCC_PLL_MUL9; // 8Mhz x 9 = 72MHz
 
+  #ifdef OVERCLOCK
+    switch(OC_TARGET_MHZ) {
+      case 80:  RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL10; break;
+      case 96:  RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL12; break;
+      case 104: RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL13; break;
+      case 112: RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL14; break;
+      case 128: RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL16; break;
+    }
+  #endif
+
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) == HAL_OK) {
+
+    #ifdef OVERCLOCK
+      VariantCoreClock = OC_TARGET_MHZ;
+    #else
+      VariantCoreClock = 72;
+    #endif
+
     // Initializes the CPU, AHB and APB busses clocks
     RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK
                                   | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2;
@@ -196,6 +215,13 @@ bool SetSysClock_PLL_HSI(void)
     RCC_OscInitStruct.PLL.PLLMUL        = RCC_PLL_MUL16; // 64 MHz, stay close to 72 for delay()
   #endif
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) == HAL_OK) {
+
+    #ifdef USBCON
+      VariantCoreClock = 48;
+    #else
+      VariantCoreClock = 64;
+    #endif
+
     // Initializes the CPU, AHB and APB busses clocks
     RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK
                                   | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2;

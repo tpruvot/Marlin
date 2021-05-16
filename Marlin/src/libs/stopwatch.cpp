@@ -28,6 +28,11 @@
   #include "../lcd/extui/ui_api.h"
 #endif
 
+#if defined(OVERCLOCK) && defined(MAPLE_STM32F1)
+  // elapsed time adjustment
+  #define millis() ((millis()*OC_BASE_MHZ)/OC_TARGET_MHZ)
+#endif
+
 Stopwatch::State Stopwatch::state;
 millis_t Stopwatch::accumulator;
 millis_t Stopwatch::startTimestamp;

@@ -65,6 +65,10 @@ void GcodeSuite::M575() {
 
       SERIAL_FLUSH();
 
+      #if defined(OVERCLOCK) && defined(MAPLE_STM32F1)
+        baud = (baud*OC_BASE_MHZ)/OC_TARGET_MHZ;
+      #endif
+
       if (set1) { MYSERIAL1.end(); MYSERIAL1.begin(baud); }
       #if HAS_MULTI_SERIAL
         if (set2) { MYSERIAL2.end(); MYSERIAL2.begin(baud); }

@@ -51,7 +51,12 @@
   #define SDIO_CLOCK 18000000 // 18 MHz
 #endif
 
-#define SD_TIMEOUT              1000 // ms
+#define SD_TIMEOUT   1000 // ms
+
+#ifdef OVERCLOCK
+  #undef SDIO_CLOCK
+  #define SDIO_CLOCK ((18000000*OC_BASE_MHZ)/OC_TARGET_MHZ)
+#endif
 
 // SDIO Max Clock (naming from STM Manual, don't change)
 #define SDIOCLK 48000000

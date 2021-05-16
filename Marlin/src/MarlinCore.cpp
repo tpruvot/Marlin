@@ -1092,20 +1092,25 @@ void setup() {
   #endif
   #define SETUP_RUN(C) do{ SETUP_LOG(STRINGIFY(C)); C; }while(0)
 
-  MYSERIAL1.begin(BAUDRATE);
+  #ifdef OVERCLOCK
+    #define CLOCKRATE ((BAUDRATE*OC_BASE_MHZ)/OC_TARGET_MHZ)
+  #else
+    #define CLOCKRATE BAUDRATE
+  #endif
+  MYSERIAL1.begin(CLOCKRATE);
   millis_t serial_connect_timeout = millis() + 1000UL;
   while (!MYSERIAL1.connected() && PENDING(millis(), serial_connect_timeout)) { /*nada*/ }
 
   #if HAS_MULTI_SERIAL && !HAS_ETHERNET
     #ifndef BAUDRATE_2
-      #define BAUDRATE_2 BAUDRATE
+      #define BAUDRATE_2 CLOCKRATE
     #endif
     MYSERIAL2.begin(BAUDRATE_2);
     serial_connect_timeout = millis() + 1000UL;
     while (!MYSERIAL2.connected() && PENDING(millis(), serial_connect_timeout)) { /*nada*/ }
     #ifdef SERIAL_PORT_3
       #ifndef BAUDRATE_3
-        #define BAUDRATE_3 BAUDRATE
+        #define BAUDRATE_3 CLOCKRATE
       #endif
       MYSERIAL3.begin(BAUDRATE_3);
       serial_connect_timeout = millis() + 1000UL;

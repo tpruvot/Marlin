@@ -212,6 +212,11 @@ void menu_info_thermistors() {
   END_SCREEN();
 }
 
+#if MOTHERBOARD == BOARD_LONGER3D_LK
+  #define SHOW_VARIANT_CLOCK
+  extern uint16_t VariantCoreClock; // in MHz
+#endif
+
 //
 // About Printer > Board Info
 //
@@ -227,11 +232,24 @@ void menu_info_board() {
   PSTRING_ITEM(MSG_INFO_PROTOCOL, PROTOCOL_VERSION, SS_CENTER);    // Protocol: 1.0
   PSTRING_ITEM(MSG_INFO_PSU, PSU_NAME, SS_CENTER);
   #ifdef OVERCLOCK
-    STATIC_ITEM_P("Freq: " STRINGIFY(OC_TARGET_MHZ) " MHz", SS_LEFT);
+    STATIC_ITEM_F(F("SoC Freq: " STRINGIFY(OC_TARGET_MHZ) " MHz"), SS_CENTER);
+    #ifdef SHOW_VARIANT_CLOCK
+      if (VariantCoreClock != OC_TARGET_MHZ) {
+        char buffer[21];
+        snprintf_P(buffer, 20, " Actual: %u MHz", unsigned(VariantCoreClock));
+        STATIC_ITEM_F(F(buffer), SS_CENTER);
+      }
+    #endif
   #elif defined(F_CPU)
     char buffer[21];
-    snprintf_P(buffer, 20, "Freq: %u MHz", unsigned(F_CPU/1000000));
-    STATIC_ITEM_P(buffer, SS_LEFT);
+    snprintf_P(buffer, 20, "SoC Freq: %u MHz", unsigned(F_CPU/1000000));
+    STATIC_ITEM_F(F(buffer), SS_CENTER);
+    #ifdef SHOW_VARIANT_CLOCK
+      if (VariantCoreClock != unsigned(F_CPU/1000000)) {
+        snprintf_P(buffer, 20, " Actual: %u MHz", unsigned(VariantCoreClock));
+        STATIC_ITEM_F(F(buffer), SS_CENTER);
+      }
+    #endif
   #endif
   END_SCREEN();
 }
@@ -272,6 +290,11 @@ void menu_info_board() {
         TERN_(AUTO_BED_LEVELING_UBL, MSG_UBL_LEVELING)            // Unified Bed Leveling
         TERN_(MESH_BED_LEVELING, MSG_MESH_LEVELING)               // Mesh Leveling
       );
+    #endif
+    #ifdef MAPLE_STM32F1
+      STATIC_ITEM_F(F("Maple STM32F1 HAL"), SS_CENTER);
+    #elif defined(HAL_STM32)
+      STATIC_ITEM_F(F("Common STM32 HAL"), SS_CENTER);
     #endif
     END_SCREEN();
   }

@@ -553,9 +553,9 @@
     // Use the command M303 E0 S200 C8 if you make changes to your extruder.
 
     // Alfawise U30/U20
-    #define DEFAULT_Kp 15.39
-    #define DEFAULT_Ki 0.83
-    #define DEFAULT_Kd 71.24
+    #define DEFAULT_Kp 15.10
+    #define DEFAULT_Ki 0.81
+    #define DEFAULT_Kd 70.85
   #endif
 
 #endif // PIDTEMP
@@ -601,9 +601,9 @@
 
 #if defined(U30) || defined(LK2) || defined(LK4)
   //From M303 command for Alfawise U30 :
-  #define DEFAULT_bedKp 225.38
-  #define DEFAULT_bedKi 40.75
-  #define DEFAULT_bedKd 311.68
+  #define DEFAULT_bedKp 71.24
+  #define DEFAULT_bedKi 13.26
+  #define DEFAULT_bedKd 255.12
 #endif
 
 #if defined(U20) || defined(LK1)
@@ -1116,7 +1116,7 @@
  *     |    [-]    |
  *     O-- FRONT --+
  */
-#define NOZZLE_TO_PROBE_OFFSET { -25.4, -30.3, 0 }
+#define NOZZLE_TO_PROBE_OFFSET { -25.4, -30.3, -0.2 }
 
 // Most probes should stay away from the edges of the bed, but
 // with NOZZLE_AS_PROBE this can be negative for a wider probing area.

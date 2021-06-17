@@ -80,9 +80,9 @@
 //     These defines are set in platformio.ini build parameters, sample for U20 -DU20 -DTS_V12
 //     U20_PLUS was not tested, as we do not have a printer to test. Print bed PID settings MUST be tuned for it.
 
-// Valid platformio.ini submodel values are U20_PLUS U20 U30 LK1 LK2 LK4
+// Valid platformio.ini submodel values are U20_PLUS U20 U30 LK1 LK1_PLUS LK2 LK4
 
-// Valid platformio.ini touchscreens are TS_V11 TS_V12 TS_V19
+// Valid platformio.ini touchscreens are TS_V11 TS_V12 and TS_V19 (2019)
 
 // 2 - Select the screen controller type. Most common is ILI9341 - First option. If your screen remains white,
 //     Try the alternate setting - this should enable ST7789V or ILI9328. For other LCDs... code is needed
@@ -179,6 +179,8 @@
 #define CUSTOM_MACHINE_NAME "Alfawise U20+"
 #elif defined(LK1)
 #define CUSTOM_MACHINE_NAME "Longer3D LK1"
+#elif defined(LK1_PLUS)
+#define CUSTOM_MACHINE_NAME "Longer3D LK1+"
 #elif defined(LK2)
 #define CUSTOM_MACHINE_NAME "Longer3D LK2"
 #elif defined(LK4)
@@ -676,7 +678,7 @@
     #define DEFAULT_bedKd 1164.25
   #endif
 
-  #ifdef U20_PLUS
+  #if defined(U20_PLUS) || defined(LK1_PLUS)
     // These PID settings MUST be updated
     #define DEFAULT_bedKp 841.68
     #define DEFAULT_bedKi 152.12
@@ -1405,7 +1407,7 @@
 #define Z_MACHINE_MAX 400
 #endif
 
-#ifdef U20_PLUS
+#if defined(U20_PLUS) || defined(LK1_PLUS)
 #define X_BED_SIZE 400
 #define Y_BED_SIZE 400
 #define Z_MACHINE_MAX 500
@@ -1582,7 +1584,7 @@
 /**
  * Normally G28 leaves leveling disabled on completion. Enable one of
  * these options to restore the prior leveling state or to always enable
- * leveling immediately after G28.
+ * leveling immediately after G28. (PREFER M420 S1 in slicer start gcode, after G28)
  */
 #define RESTORE_LEVELING_AFTER_G28
 //#define ENABLE_LEVELING_AFTER_G28
@@ -1632,8 +1634,8 @@
     #define MESH_TEST_LAYER_HEIGHT   0.2  // (mm) Default layer height for G26.
     #define MESH_TEST_HOTEND_TEMP  205    // (°C) Default nozzle temperature for G26.
     #define MESH_TEST_BED_TEMP      60    // (°C) Default bed temperature for G26.
-    #define G26_XY_FEEDRATE         20    // (mm/s) Feedrate for G26 XY moves.
-    #define G26_XY_FEEDRATE_TRAVEL 100    // (mm/s) Feedrate for G26 XY travel moves.
+    //#define G26_XY_FEEDRATE         20  // (mm/s) Feedrate for G26 XY moves.
+    //#define G26_XY_FEEDRATE_TRAVEL 100  // (mm/s) Feedrate for G26 XY travel moves.
     #define G26_RETRACT_MULTIPLIER   5.0  // G26 Q (retraction) used by default between mesh test elements.
   #endif
 
@@ -2819,6 +2821,7 @@
   #endif
 
   #if ENABLED(TFT_COLOR_UI)
+    #undef CUSTOM_STATUS_SCREEN_IMAGE // only in Classic UI
     //#define SINGLE_TOUCH_NAVIGATION
   #endif
 #endif

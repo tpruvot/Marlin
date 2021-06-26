@@ -560,9 +560,9 @@
     // Use the command M303 E0 S200 C8 if you make changes to your extruder.
 
     // Alfawise U30/U20
-    #define DEFAULT_Kp 15.10
-    #define DEFAULT_Ki 0.81
-    #define DEFAULT_Kd 70.85
+    #define DEFAULT_Kp 25.73
+    #define DEFAULT_Ki 2.47
+    #define DEFAULT_Kd 67.04
   #endif
 
 #endif // PIDTEMP
@@ -872,8 +872,8 @@
  *                                      X, Y, Z, E0 [, E1[, E2...]]
  */
 // FHU Extrudeur d'origine : 98
-// FHU Extrudeur BMC       : 426.09
-#define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 400, 426.1 }
+// FHU Extrudeur BMC       : 410
+#define DEFAULT_AXIS_STEPS_PER_UNIT   { 78.6, 78.6, 410, 410 }
 
 /**
  * Default Max Feed Rate (mm/s)
@@ -1123,7 +1123,7 @@
  *     |    [-]    |
  *     O-- FRONT --+
  */
-#define NOZZLE_TO_PROBE_OFFSET { -25.4, -30.3, -0.2 }
+#define NOZZLE_TO_PROBE_OFFSET { -25.4, -30.3, -1.45 }
 
 // Most probes should stay away from the edges of the bed, but
 // with NOZZLE_AS_PROBE this can be negative for a wider probing area.
@@ -1265,7 +1265,7 @@
 // @section extruder
 
 // For direct drive extruder v9 set to true, for geared extruder set to false.
-#define INVERT_E0_DIR false
+#define INVERT_E0_DIR true
 #define INVERT_E1_DIR false
 #define INVERT_E2_DIR false
 #define INVERT_E3_DIR false
@@ -1302,9 +1302,9 @@
 // The size of the printable area
 
 #if defined(U30) || defined(LK2) || defined(LK4)
-#define X_BED_SIZE 220
+#define X_BED_SIZE 220 //220 Bowden 190 Direct drive (moteur qui tape)
 #define Y_BED_SIZE 220
-#define Z_MACHINE_MAX 250
+#define Z_MACHINE_MAX 200 //250 Bowden 190 Direct drive
 #endif
 
 #if defined(U20) || defined(LK1)
@@ -1792,14 +1792,14 @@
 // Preheat Constants - Up to 5 are supported without changes
 //
 #define PREHEAT_1_LABEL       "PLA"
-#define PREHEAT_1_TEMP_HOTEND 200
-#define PREHEAT_1_TEMP_BED     50
+#define PREHEAT_1_TEMP_HOTEND 205
+#define PREHEAT_1_TEMP_BED     55
 #define PREHEAT_1_TEMP_CHAMBER 35
 #define PREHEAT_1_FAN_SPEED     0 // Value from 0 to 255
 
 #define PREHEAT_2_LABEL       "PETG"
 #define PREHEAT_2_TEMP_HOTEND 235
-#define PREHEAT_2_TEMP_BED     60
+#define PREHEAT_2_TEMP_BED     70
 #define PREHEAT_2_TEMP_CHAMBER 35
 #define PREHEAT_2_FAN_SPEED     0 // Value from 0 to 255
 

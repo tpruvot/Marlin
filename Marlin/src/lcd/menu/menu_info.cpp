@@ -291,6 +291,11 @@ void menu_info_board() {
         TERN_(MESH_BED_LEVELING, MSG_MESH_LEVELING)               // Mesh Leveling
       );
     #endif
+    #ifdef MAPLE_STM32F1
+      STATIC_ITEM_P(PSTR("Maple STM32F1 HAL"), SS_CENTER);
+    #elif defined(HAL_STM32)
+      STATIC_ITEM_P(PSTR("Common STM32 HAL"), SS_CENTER);
+    #endif
     END_SCREEN();
   }
 

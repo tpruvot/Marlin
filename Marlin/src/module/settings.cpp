@@ -1475,6 +1475,8 @@ void MarlinSettings::postprocess() {
 
     TERN_(EXTENSIBLE_UI, ExtUI::onConfigurationStoreWritten(!eeprom_error));
 
+    settings.was_reset = eeprom_error;
+
     return !eeprom_error;
   }
 
@@ -2438,12 +2440,14 @@ void MarlinSettings::postprocess() {
     if (validate()) {
       const bool success = _load();
       TERN_(EXTENSIBLE_UI, ExtUI::onConfigurationStoreRead(success));
+      settings.was_reset = !success;
       return success;
     }
     reset();
     #if ENABLED(EEPROM_AUTO_INIT)
       (void)save();
       SERIAL_ECHO_MSG("EEPROM Initialized");
+      settings.was_reset = true;
     #endif
     return false;
   }
@@ -2589,6 +2593,8 @@ void MarlinSettings::reset() {
   planner.settings.travel_acceleration = DEFAULT_TRAVEL_ACCELERATION;
   planner.settings.min_feedrate_mm_s = feedRate_t(DEFAULT_MINIMUMFEEDRATE);
   planner.settings.min_travel_feedrate_mm_s = feedRate_t(DEFAULT_MINTRAVELFEEDRATE);
+
+  settings.was_reset = true;
 
   #if HAS_CLASSIC_JERK
     #ifndef DEFAULT_XJERK

@@ -1624,7 +1624,7 @@
 /**
  * Normally G28 leaves leveling disabled on completion. Enable one of
  * these options to restore the prior leveling state or to always enable
- * leveling immediately after G28.
+ * leveling immediately after G28. (PREFER M420 S1 in slicer start gcode, after G28)
  */
 #define RESTORE_LEVELING_AFTER_G28
 //#define ENABLE_LEVELING_AFTER_G28
@@ -1674,8 +1674,8 @@
     #define MESH_TEST_LAYER_HEIGHT   0.2  // (mm) Default layer height for G26.
     #define MESH_TEST_HOTEND_TEMP  205    // (°C) Default nozzle temperature for G26.
     #define MESH_TEST_BED_TEMP      60    // (°C) Default bed temperature for G26.
-    #define G26_XY_FEEDRATE         20    // (mm/s) Feedrate for G26 XY moves.
-    #define G26_XY_FEEDRATE_TRAVEL 100    // (mm/s) Feedrate for G26 XY travel moves.
+    //#define G26_XY_FEEDRATE         20  // (mm/s) Feedrate for G26 XY moves.
+    //#define G26_XY_FEEDRATE_TRAVEL 100  // (mm/s) Feedrate for G26 XY travel moves.
     #define G26_RETRACT_MULTIPLIER   5.0  // G26 Q (retraction) used by default between mesh test elements.
   #endif
 
@@ -2915,6 +2915,7 @@
   #endif
 
   #if ENABLED(TFT_COLOR_UI)
+    #undef CUSTOM_STATUS_SCREEN_IMAGE // only in Classic UI
     //#define SINGLE_TOUCH_NAVIGATION
   #endif
 #endif

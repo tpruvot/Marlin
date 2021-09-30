@@ -25,6 +25,10 @@ exec_test () {
   fi
   if platformio run --project-dir $1 -e $2 $silent; then
     printf "\033[0;32mPassed\033[0m\n"
+    platformio lib -e $TEST_TARGET list
+    ROOT=$(pwd)
+    cd $ROOT/.pio/build/$TEST_TARGET && ls -gGldSr * lib???/*.a 2>/dev/null || echo no extra libs
+    cd $ROOT
     return 0
   else
     if [[ -n $GIT_RESET_HARD ]]; then

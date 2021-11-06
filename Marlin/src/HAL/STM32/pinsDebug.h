@@ -207,6 +207,7 @@ bool pwm_status(const pin_t Ard_num) {
 }
 
 void pwm_details(const pin_t Ard_num) {
+  bool show_timer = false;
   #ifndef STM32F1xx
     if (pwm_status(Ard_num)) {
       uint32_t alt_all = 0;
@@ -245,9 +246,9 @@ void pwm_details(const pin_t Ard_num) {
       SERIAL_ECHOPGM(" - ");
       switch (alt_func) {
         case  0 : SERIAL_ECHOPGM("system (misc. I/O)"); break;
-        case  1 : SERIAL_ECHOPGM("TIM1/TIM2 (probably PWM)"); break;
-        case  2 : SERIAL_ECHOPGM("TIM3..5 (probably PWM)"); break;
-        case  3 : SERIAL_ECHOPGM("TIM8..11 (probably PWM)"); break;
+        case  1 :
+        case  2 :
+        case  3 : SERIAL_ECHOPGM("PWM"); show_timer = true; break;
         case  4 : SERIAL_ECHOPGM("I2C1..3"); break;
         case  5 : SERIAL_ECHOPGM("SPI1/SPI2"); break;
         case  6 : SERIAL_ECHOPGM("SPI3"); break;
@@ -264,5 +265,19 @@ void pwm_details(const pin_t Ard_num) {
     }
   #else
     // TODO: F1 doesn't support changing pins function, so we need to check the function of the PIN and if it's enabled
+    show_timer = true;
   #endif
+
+  if (show_timer && PWM_PIN(Ard_num)) {
+    const PinName dp = digitalPinToPinName(Ard_num);
+    uint32_t func = pinmap_function(dp, PinMap_PWM);
+    if (func != uint32_t(NC)) {
+      TIM_TypeDef *Instance = (TIM_TypeDef *)pinmap_peripheral(dp, PinMap_PWM);
+      uint8_t tim_index = uint8_t(get_timer_index(Instance) + 1);
+      uint8_t tim_chan = uint8_t(STM_PIN_CHANNEL(func));
+      SERIAL_ECHOPGM(" TIM", tim_index);
+      SERIAL_ECHOPGM("_CH", tim_chan);
+    }
+  }
+
 } // pwm_details

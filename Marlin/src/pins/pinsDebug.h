@@ -275,16 +275,14 @@ inline void report_pin_state_extended(pin_t pin, const bool ignore, const bool e
             SERIAL_ECHOPGM("   ");
           }
           else
-          SERIAL_ECHO_SP(MAX_NAME_LENGTH - 16);   // add padding if not an analog pin
+            SERIAL_ECHO_SP(MAX_NAME_LENGTH - 16);   // add padding if not an analog pin
 
           print_input_or_output(false);
           SERIAL_ECHO(digitalRead_mod(pin));
         }
         //if (!pwm_status(pin)) SERIAL_CHAR(' ');    // add padding if it's not a PWM pin
-        if (extended) {
-          SERIAL_ECHO_SP(MAX_NAME_LENGTH - 16);
-          pwm_details(pin);  // report PWM capabilities only if doing an extended report
-        }
+        SERIAL_ECHO_SP(MAX_NAME_LENGTH - 16);
+        pwm_details(pin);  // report PWM capabilities only if doing an extended report
       }
     }
     SERIAL_EOL();

@@ -26,8 +26,8 @@
 
 #include "../../inc/MarlinConfig.h"
 
-// Array to support sticky frequency sets per timer
-static uint16_t timer_freq[TIMER_NUM];
+// Optional custom PWM frequencies per timer (see pwm.cpp)
+extern uint16_t pwmFrequencies[TIMER_NUM];
 
 void MarlinHAL::set_pwm_duty(const pin_t pin, const uint16_t v, const uint16_t v_size/*=255*/, const bool invert/*=false*/) {
   const uint16_t duty = invert ? v_size - v : v;
@@ -46,7 +46,7 @@ void MarlinHAL::set_pwm_duty(const pin_t pin, const uint16_t v, const uint16_t v
     if (previousMode != TIMER_OUTPUT_COMPARE_PWM1)
       HT->setMode(channel, TIMER_OUTPUT_COMPARE_PWM1, pin);
 
-    if (needs_freq && timer_freq[index] == 0)     // If the timer is unconfigured and no freq is set then default PWM_FREQUENCY
+    if (needs_freq && pwmFrequencies[index] == 0) // If the timer is unconfigured and no freq is set then default PWM_FREQUENCY
       set_pwm_frequency(pin_name, PWM_FREQUENCY); // Set the frequency and save the value to the assigned index no.
 
     // Note the resolution is sticky here, the input can be upto 16 bits and that would require RESOLUTION_16B_COMPARE_FORMAT (16)
@@ -82,7 +82,7 @@ void MarlinHAL::set_pwm_frequency(const pin_t pin, const uint16_t f_desired) {
     HardwareTimer_Handle[index]->__this = new HardwareTimer((TIM_TypeDef *)pinmap_peripheral(pin_name, PinMap_PWM));
   HardwareTimer * const HT = (HardwareTimer *)(HardwareTimer_Handle[index]->__this);
   HT->setOverflow(f_desired, HERTZ_FORMAT);
-  timer_freq[index] = f_desired; // Save the last frequency so duty will not set the default for this timer number.
+  pwmFrequencies[index] = f_desired; // Save the last frequency so duty will not set the default for this timer number.
 }
 
 #endif // HAL_STM32

@@ -235,6 +235,15 @@ extern volatile uint32_t systick_uptime_millis;
 #define HAL_CAN_SET_PWM_FREQ   // This HAL supports PWM Frequency adjustment
 
 /**
+ * Based on analogWrite with tunable frequency per timer
+ */
+void pwmWrite(const pin_t pin, const uint8_t val);
+
+void pwmSetFrequency(const uint8_t timer_num, uint16_t freq);
+
+uint16_t pwmGetDefaultFrequency(const pin_t pin);
+
+/**
  * set_pwm_frequency
  *  Set the frequency of the timer corresponding to the provided pin
  *  All Timer PWM pins run at the same frequency

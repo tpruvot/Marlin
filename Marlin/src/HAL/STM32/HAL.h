@@ -287,3 +287,13 @@ public:
   static void set_pwm_frequency(const pin_t pin, const uint16_t f_desired);
 
 };
+
+/**
+ * Based on analogWrite with tunable frequency per timer
+ */
+void pwmWrite(const pin_t pin, const uint8_t val);
+
+void pwmSetFrequency(const uint8_t timer_num, uint16_t freq);
+
+uint16_t pwmGetDefaultFrequency(const pin_t pin);
+

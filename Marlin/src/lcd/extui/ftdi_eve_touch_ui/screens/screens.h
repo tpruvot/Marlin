@@ -22,6 +22,7 @@
 
 #pragma once
 
+<<<<<<< HEAD:Marlin/src/lcd/extui/ftdi_eve_touch_ui/screens/screens.h
 #include "../compat.h"
 
 #if ENABLED(TOUCH_UI_FTDI_EVE)
@@ -37,6 +38,8 @@
 
 extern tiny_timer_t refresh_timer;
 
+=======
+>>>>>>> cdb27efa57940677d37bd692d4d236c73e909f7d:Marlin/src/lcd/extui/ftdi_eve_touch_ui/generic/screens.h
 /********************************* DL CACHE SLOTS ******************************/
 
 // In order to reduce SPI traffic, we cache display lists (DL) in RAMG. This
@@ -98,16 +101,6 @@ enum {
   #if ENABLED(FILAMENT_RUNOUT_SENSOR)
     FILAMENT_RUNOUT_SCREEN_CACHE,
   #endif
-  #if ENABLED(TOUCH_UI_LULZBOT_BIO)
-    PRINTING_SCREEN_CACHE,
-  #endif
-  #if ENABLED(TOUCH_UI_COCOA_PRESS)
-    PREHEAT_MENU_CACHE,
-    PREHEAT_TIMER_SCREEN_CACHE,
-    LOAD_CHOCOLATE_SCREEN_CACHE,
-    MOVE_XYZ_SCREEN_CACHE,
-    MOVE_E_SCREEN_CACHE,
-  #endif
   #if ENABLED(SDSUPPORT)
     FILES_SCREEN_CACHE,
   #endif
@@ -135,36 +128,10 @@ enum {
 #include "base_screen.h"
 #include "base_numeric_adjustment_screen.h"
 #include "dialog_box_base_class.h"
-
-#if ENABLED(TOUCH_UI_LULZBOT_BIO)
-  #include "bio_status_screen.h"
-  #include "bio_main_menu.h"
-  #include "bio_tune_menu.h"
-  #include "bio_advanced_settings.h"
-  #include "bio_printing_dialog_box.h"
-  #include "bio_confirm_home_xyz.h"
-  #include "bio_confirm_home_e.h"
-
-#elif ENABLED(TOUCH_UI_COCOA_PRESS)
-  #include "cocoa_press_status_screen.h"
-  #include "cocoa_press_main_menu.h"
-  #include "cocoa_press_advanced_settings_menu.h"
-  #include "cocoa_press_preheat_menu.h"
-  #include "cocoa_press_preheat_screen.h"
-  #include "cocoa_press_load_chocolate.h"
-  #include "move_axis_screen.h"
-  #include "flow_percent_screen.h"
-  #include "cocoa_press_move_xyz_screen.h"
-  #include "cocoa_press_move_e_screen.h"
-  #include "tune_menu.h"
-
-#else
-  #include "status_screen.h"
-  #include "main_menu.h"
-  #include "advanced_settings_menu.h"
-  #include "tune_menu.h"
-#endif
-
+#include "status_screen.h"
+#include "main_menu.h"
+#include "advanced_settings_menu.h"
+#include "tune_menu.h"
 #include "boot_screen.h"
 #include "about_screen.h"
 #include "kill_screen.h"
@@ -206,7 +173,11 @@ enum {
 #endif
 
 #if HAS_LEVELING
-  #include "leveling_menu.h"
+  #if ENABLED(TOUCH_UI_SYNDAVER_LEVEL)
+    #include "syndaver_level/leveling_menu.h"
+  #else
+    #include "leveling_menu.h"
+  #endif
   #if HAS_BED_PROBE
     #include "z_offset_screen.h"
   #endif
@@ -269,5 +240,3 @@ enum {
 #if NUM_LANGUAGES > 1
   #include "language_menu.h"
 #endif
-
-#endif // TOUCH_UI_FTDI_EVE

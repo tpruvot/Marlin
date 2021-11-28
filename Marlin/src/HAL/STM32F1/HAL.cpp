@@ -253,7 +253,7 @@ static void NVIC_SetPriorityGrouping(uint32_t PriorityGroup) {
   reg_value &= ~(SCB_AIRCR_VECTKEY_Msk | SCB_AIRCR_PRIGROUP_Msk);             /* clear bits to change               */
   reg_value  =  (reg_value                                 |
                 ((uint32_t)0x5FA << SCB_AIRCR_VECTKEY_Pos) |
-                (PriorityGroupTmp << 8));                                     /* Insert write key and priorty group */
+                (PriorityGroupTmp << 8));                                     /* Insert write key & priority group  */
   SCB->AIRCR =  reg_value;
 }
 
@@ -279,6 +279,8 @@ static void NVIC_SetPriorityGrouping(uint32_t PriorityGroup) {
 #endif
 
 TERN_(POSTMORTEM_DEBUGGING, extern void install_min_serial());
+
+uint16_t VariantCoreClock = uint16_t(F_CPU/1000000); // in MHz
 
 #ifdef OVERCLOCK
 
@@ -318,7 +320,7 @@ extern "C" {
 }
 
 /* Overclock the STM32F103, up to 128 MHz */
-static uint32_t overclock_stm32f103() {
+static uint16_t overclock_stm32f103() {
   // Reset the RCC config. to the default state,
   // doesn't modify PCLK, LSI, LSE and RTC clocks
   RCC_DeInit();
@@ -366,7 +368,7 @@ static uint32_t overclock_stm32f103() {
 
 void HAL_init() {
   #ifdef OVERCLOCK
-    overclock_stm32f103();
+    VariantCoreClock = overclock_stm32f103();
   #endif
   NVIC_SetPriorityGrouping(0x3);
   #if PIN_EXISTS(LED)
@@ -524,7 +526,7 @@ void HAL_adc_start_conversion(const uint8_t adc_pin) {
       case POWER_MONITOR_VOLTAGE_PIN: pin_index = POWERMON_VOLTS; break;
     #endif
   }
-  HAL_adc_result = (HAL_adc_results[(int)pin_index] >> 2) & 0x3FF; // shift to get 10 bits only.
+  HAL_adc_result = HAL_adc_results[(int)pin_index] >> (12 - HAL_ADC_RESOLUTION); // shift out unused bits
 }
 
 uint16_t HAL_adc_get_result() { return HAL_adc_result; }

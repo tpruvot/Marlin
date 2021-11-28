@@ -28,6 +28,14 @@
 #include "../shared/Marduino.h"
 #include "../shared/math_32bit.h"
 #include "../shared/HAL_SPI.h"
+
+#ifdef OVERCLOCK
+  #if F_CPU != (1000000U * OC_TARGET_MHZ)
+    #undef F_CPU
+    #define F_CPU (1000000U * OC_TARGET_MHZ)
+  #endif
+#endif
+
 #include "fastio.h"
 #include "Servo.h"
 #include "watchdog.h"
@@ -36,6 +44,13 @@
 #include "../../inc/MarlinConfigPre.h"
 
 #include <stdint.h>
+
+//
+// Default graphical display delays
+//
+#define CPU_ST7920_DELAY_1 300
+#define CPU_ST7920_DELAY_2  40
+#define CPU_ST7920_DELAY_3 340
 
 //
 // Serial Ports
@@ -176,8 +191,13 @@ static inline int freeMemory() {
 
 #define HAL_ANALOG_SELECT(pin) pinMode(pin, INPUT)
 
+#ifdef ADC_RESOLUTION
+  #define HAL_ADC_RESOLUTION ADC_RESOLUTION
+#else
+  #define HAL_ADC_RESOLUTION 12
+#endif
+
 #define HAL_ADC_VREF         3.3
-#define HAL_ADC_RESOLUTION  ADC_RESOLUTION // 12
 #define HAL_START_ADC(pin)  HAL_adc_start_conversion(pin)
 #define HAL_READ_ADC()      HAL_adc_result
 #define HAL_ADC_READY()     true
@@ -195,6 +215,7 @@ uint16_t HAL_adc_get_result();
 #ifdef STM32F1xx
   #define JTAG_DISABLE() AFIO_DBGAFR_CONFIG(AFIO_MAPR_SWJ_CFG_JTAGDISABLE)
   #define JTAGSWD_DISABLE() AFIO_DBGAFR_CONFIG(AFIO_MAPR_SWJ_CFG_DISABLE)
+  #define JTAGSWD_RESET() AFIO_DBGAFR_CONFIG(AFIO_MAPR_SWJ_CFG_RESET); // Reset: FULL SWD+JTAG
 #endif
 
 #define PLATFORM_M997_SUPPORT

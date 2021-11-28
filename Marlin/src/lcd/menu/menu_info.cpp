@@ -100,12 +100,13 @@ void menu_info_thermistors() {
 
   START_SCREEN();
 
-  #if EXTRUDERS
+  #if HAS_EXTRUDERS
     #define THERMISTOR_ID TEMP_SENSOR_0
     #include "../thermistornames.h"
     STATIC_ITEM_P(PSTR(LCD_STR_E0 ": " THERMISTOR_NAME), SS_INVERT);
     PSTRING_ITEM(MSG_INFO_MIN_TEMP, STRINGIFY(HEATER_0_MINTEMP), SS_LEFT);
     PSTRING_ITEM(MSG_INFO_MAX_TEMP, STRINGIFY(HEATER_0_MAXTEMP), SS_LEFT);
+    STATIC_ITEM(TERN(WATCH_HOTENDS, MSG_INFO_RUNAWAY_ON, MSG_INFO_RUNAWAY_OFF), SS_LEFT);
   #endif
 
   #if TEMP_SENSOR_1 != 0
@@ -115,6 +116,7 @@ void menu_info_thermistors() {
     STATIC_ITEM_P(PSTR(LCD_STR_E1 ": " THERMISTOR_NAME), SS_INVERT);
     PSTRING_ITEM(MSG_INFO_MIN_TEMP, STRINGIFY(HEATER_1_MINTEMP), SS_LEFT);
     PSTRING_ITEM(MSG_INFO_MAX_TEMP, STRINGIFY(HEATER_1_MAXTEMP), SS_LEFT);
+    STATIC_ITEM(TERN(WATCH_HOTENDS, MSG_INFO_RUNAWAY_ON, MSG_INFO_RUNAWAY_OFF), SS_LEFT);
   #endif
 
   #if TEMP_SENSOR_2 != 0
@@ -124,6 +126,7 @@ void menu_info_thermistors() {
     STATIC_ITEM_P(PSTR(LCD_STR_E2 ": " THERMISTOR_NAME), SS_INVERT);
     PSTRING_ITEM(MSG_INFO_MIN_TEMP, STRINGIFY(HEATER_2_MINTEMP), SS_LEFT);
     PSTRING_ITEM(MSG_INFO_MAX_TEMP, STRINGIFY(HEATER_2_MAXTEMP), SS_LEFT);
+    STATIC_ITEM(TERN(WATCH_HOTENDS, MSG_INFO_RUNAWAY_ON, MSG_INFO_RUNAWAY_OFF), SS_LEFT);
   #endif
 
   #if TEMP_SENSOR_3 != 0
@@ -133,6 +136,7 @@ void menu_info_thermistors() {
     STATIC_ITEM_P(PSTR(LCD_STR_E3 ": " THERMISTOR_NAME), SS_INVERT);
     PSTRING_ITEM(MSG_INFO_MIN_TEMP, STRINGIFY(HEATER_3_MINTEMP), SS_LEFT);
     PSTRING_ITEM(MSG_INFO_MAX_TEMP, STRINGIFY(HEATER_3_MAXTEMP), SS_LEFT);
+    STATIC_ITEM(TERN(WATCH_HOTENDS, MSG_INFO_RUNAWAY_ON, MSG_INFO_RUNAWAY_OFF), SS_LEFT);
   #endif
 
   #if TEMP_SENSOR_4 != 0
@@ -142,6 +146,7 @@ void menu_info_thermistors() {
     STATIC_ITEM_P(PSTR(LCD_STR_E4 ": " THERMISTOR_NAME), SS_INVERT);
     PSTRING_ITEM(MSG_INFO_MIN_TEMP, STRINGIFY(HEATER_4_MINTEMP), SS_LEFT);
     PSTRING_ITEM(MSG_INFO_MAX_TEMP, STRINGIFY(HEATER_4_MAXTEMP), SS_LEFT);
+    STATIC_ITEM(TERN(WATCH_HOTENDS, MSG_INFO_RUNAWAY_ON, MSG_INFO_RUNAWAY_OFF), SS_LEFT);
   #endif
 
   #if TEMP_SENSOR_5 != 0
@@ -151,6 +156,7 @@ void menu_info_thermistors() {
     STATIC_ITEM_P(PSTR(LCD_STR_E5 ": " THERMISTOR_NAME), SS_INVERT);
     PSTRING_ITEM(MSG_INFO_MIN_TEMP, STRINGIFY(HEATER_5_MINTEMP), SS_LEFT);
     PSTRING_ITEM(MSG_INFO_MAX_TEMP, STRINGIFY(HEATER_5_MAXTEMP), SS_LEFT);
+    STATIC_ITEM(TERN(WATCH_HOTENDS, MSG_INFO_RUNAWAY_ON, MSG_INFO_RUNAWAY_OFF), SS_LEFT);
   #endif
 
   #if TEMP_SENSOR_6 != 0
@@ -160,6 +166,7 @@ void menu_info_thermistors() {
     STATIC_ITEM_P(PSTR(LCD_STR_E6 ": " THERMISTOR_NAME), SS_INVERT);
     PSTRING_ITEM(MSG_INFO_MIN_TEMP, STRINGIFY(HEATER_6_MINTEMP), SS_LEFT);
     PSTRING_ITEM(MSG_INFO_MAX_TEMP, STRINGIFY(HEATER_6_MAXTEMP), SS_LEFT);
+    STATIC_ITEM(TERN(WATCH_HOTENDS, MSG_INFO_RUNAWAY_ON, MSG_INFO_RUNAWAY_OFF), SS_LEFT);
   #endif
 
   #if TEMP_SENSOR_7 != 0
@@ -169,9 +176,6 @@ void menu_info_thermistors() {
     STATIC_ITEM_P(PSTR(LCD_STR_E7 ": " THERMISTOR_NAME), SS_INVERT);
     PSTRING_ITEM(MSG_INFO_MIN_TEMP, STRINGIFY(HEATER_7_MINTEMP), SS_LEFT);
     PSTRING_ITEM(MSG_INFO_MAX_TEMP, STRINGIFY(HEATER_7_MAXTEMP), SS_LEFT);
-  #endif
-
-  #if EXTRUDERS
     STATIC_ITEM(TERN(WATCH_HOTENDS, MSG_INFO_RUNAWAY_ON, MSG_INFO_RUNAWAY_OFF), SS_LEFT);
   #endif
 
@@ -208,6 +212,11 @@ void menu_info_thermistors() {
   END_SCREEN();
 }
 
+#if MOTHERBOARD == BOARD_LONGER3D_LK
+  #define SHOW_VARIANT_CLOCK
+  extern uint16_t VariantCoreClock; // in MHz
+#endif
+
 //
 // About Printer > Board Info
 //
@@ -223,11 +232,24 @@ void menu_info_board() {
   PSTRING_ITEM(MSG_INFO_PROTOCOL, PROTOCOL_VERSION, SS_CENTER);    // Protocol: 1.0
   PSTRING_ITEM(MSG_INFO_PSU, PSU_NAME, SS_CENTER);
   #ifdef OVERCLOCK
-    STATIC_ITEM_P("Freq: " STRINGIFY(OC_TARGET_MHZ) " MHz", SS_LEFT);
+    STATIC_ITEM_P("SoC Freq: " STRINGIFY(OC_TARGET_MHZ) " MHz", SS_CENTER);
+    #ifdef SHOW_VARIANT_CLOCK
+      if (VariantCoreClock != OC_TARGET_MHZ) {
+        char buffer[21];
+        snprintf_P(buffer, 20, " Actual: %u MHz", unsigned(VariantCoreClock));
+        STATIC_ITEM_P(buffer, SS_CENTER);
+      }
+    #endif
   #elif defined(F_CPU)
     char buffer[21];
-    snprintf_P(buffer, 20, "Freq: %u MHz", unsigned(F_CPU/1000000));
-    STATIC_ITEM_P(buffer, SS_LEFT);
+    snprintf_P(buffer, 20, "SoC Freq: %u MHz", unsigned(F_CPU/1000000));
+    STATIC_ITEM_P(buffer, SS_CENTER);
+    #ifdef SHOW_VARIANT_CLOCK
+      if (VariantCoreClock != unsigned(F_CPU/1000000)) {
+        snprintf_P(buffer, 20, " Actual: %u MHz", unsigned(VariantCoreClock));
+        STATIC_ITEM_P(buffer, SS_CENTER);
+      }
+    #endif
   #endif
   END_SCREEN();
 }
@@ -257,7 +279,7 @@ void menu_info_board() {
     STATIC_ITEM(MSG_MARLIN, SS_DEFAULT|SS_INVERT);              // Marlin
     STATIC_ITEM_P(PSTR(SHORT_BUILD_VERSION));                   // x.x.x-Branch
     STATIC_ITEM_P(PSTR(STRING_DISTRIBUTION_DATE));              // YYYY-MM-DD HH:MM
-    STATIC_ITEM_P(PSTR(MACHINE_NAME));                          // My3DPrinter
+    STATIC_ITEM_P(PSTR(MACHINE_NAME), SS_DEFAULT|SS_INVERT);    // My3DPrinter
     STATIC_ITEM_P(PSTR(WEBSITE_URL));                           // www.my3dprinter.com
     PSTRING_ITEM(MSG_INFO_EXTRUDERS, STRINGIFY(EXTRUDERS), SS_CENTER); // Extruders: 2
     #if HAS_LEVELING
@@ -268,6 +290,11 @@ void menu_info_board() {
         TERN_(AUTO_BED_LEVELING_UBL, MSG_UBL_LEVELING)            // Unified Bed Leveling
         TERN_(MESH_BED_LEVELING, MSG_MESH_LEVELING)               // Mesh Leveling
       );
+    #endif
+    #ifdef MAPLE_STM32F1
+      STATIC_ITEM_P(PSTR("Maple STM32F1 HAL"), SS_CENTER);
+    #elif defined(HAL_STM32)
+      STATIC_ITEM_P(PSTR("Common STM32 HAL"), SS_CENTER);
     #endif
     END_SCREEN();
   }
@@ -285,7 +312,7 @@ void menu_info() {
   #else
     SUBMENU(MSG_INFO_PRINTER_MENU, menu_info_printer);           // Printer Info >
     SUBMENU(MSG_INFO_BOARD_MENU, menu_info_board);               // Board Info >
-    #if EXTRUDERS
+    #if HAS_EXTRUDERS
       SUBMENU(MSG_INFO_THERMISTOR_MENU, menu_info_thermistors);  // Thermistors >
     #endif
   #endif

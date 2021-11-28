@@ -1,6 +1,6 @@
 /**
  * Marlin 3D Printer Firmware
- * Copyright (C) 2019 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
+ * Copyright (C) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
  */
 
@@ -24,7 +24,7 @@
  * and enable CUSTOM_STATUS_SCREEN_IMAGE in Configuration.h.
  *
  * Use the Marlin Bitmap Converter to make your own:
- * http://marlinfw.org/tools/u8glib/converter.html
+ * https://marlinfw.org/tools/u8glib/converter.html
  */
 
 #pragma once
@@ -37,7 +37,6 @@
 
 static unsigned char status_logo_bmp[] PROGMEM = {
 
-/*
   B11111111,B11111111,B11111111,B11111111,B11111100,
   B10000000,B00000000,B00010000,B00000111,B11111100,
   B10000000,B00000000,B00010000,B00000000,B11111100,
@@ -67,8 +66,8 @@ static unsigned char status_logo_bmp[] PROGMEM = {
   B11000000,B00000000,B01110000,B00000000,B01111100,
   B11100000,B00000000,B11110000,B00000000,B11111100,
   B11111000,B00000011,B11110000,B00000111,B11111100
-*/
 
+/* Avoid for releases.. (Copyrights)
   B00000000,B00000011,B11111100,B00000000,B00000000,
   B00000000,B00011111,B11111111,B00000000,B00000000,
   B00000000,B00111111,B11111111,B11000000,B00000000,
@@ -97,7 +96,7 @@ static unsigned char status_logo_bmp[] PROGMEM = {
   B00000000,B01111111,B11111111,B11000000,B00000000,
   B00000000,B00011111,B11111111,B00000000,B00000000,
   B00000000,B00000011,B11111100,B00000000,B00000000
-
+*/
 /* MAX AREA 30x5 bytes, empty rect
   B11111111,B11111111,B11111111,B11111111,B11111100,
   B10000000,B00000000,B00000000,B00000000,B00000100,

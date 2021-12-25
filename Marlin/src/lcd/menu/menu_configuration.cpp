@@ -541,6 +541,10 @@ void menu_configuration() {
   #if HAS_LCD_CONTRAST
     EDIT_ITEM_FAST(uint8, MSG_CONTRAST, &ui.contrast, LCD_CONTRAST_MIN, LCD_CONTRAST_MAX, ui.refresh_contrast, true);
   #endif
+  #if ENABLED(TOUCH_SCREEN_CALIBRATION)
+    SUBMENU(MSG_TOUCHSCREEN, menu_touch_screen);
+  #endif
+
   #if ENABLED(FWRETRACT)
     SUBMENU(MSG_RETRACT, menu_config_retract);
   #endif

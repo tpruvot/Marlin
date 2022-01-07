@@ -25,7 +25,7 @@
  * Release version. Leave the Marlin version or apply a custom scheme.
  */
 #ifndef SHORT_BUILD_VERSION
-  #define SHORT_BUILD_VERSION "2.0.9.x-Longer3D"
+  #define SHORT_BUILD_VERSION "2.0.9.3-Longer3D"
 #endif
 
 /**
@@ -33,7 +33,7 @@
  * vendor name, download location, GitHub account, etc.
  */
 #ifndef DETAILED_BUILD_VERSION
-  #define DETAILED_BUILD_VERSION SHORT_BUILD_VERSION " tpruvot@github (dev)"
+  #define DETAILED_BUILD_VERSION SHORT_BUILD_VERSION " tpruvot@github"
 #endif
 
 /**

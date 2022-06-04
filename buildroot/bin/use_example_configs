@@ -1,5 +1,13 @@
 #!/usr/bin/env bash
 
+#IFS=: read -r PART1 PART2 <<< "$@"
+#[ -n "${PART2}" ] && { REPO="$PART1" ; RDIR="${PART2// /%20}" ; } \
+#                  || { REPO=bugfix-2.1.x   ; RDIR="${PART1// /%20}" ; }
+#EXAMPLES="https://raw.githubusercontent.com/MarlinFirmware/Configurations/$REPO/config/examples"
+
+#which curl >/dev/null && TOOL='curl -L -s -S -f -o wgot'
+#which wget >/dev/null && TOOL='wget -q -O wgot'
+
 restore_configs
 
 if [ -f "config/examples/$@/Configuration.h" ]; then

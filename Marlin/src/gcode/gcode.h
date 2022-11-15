@@ -1246,3 +1246,6 @@ private:
 };
 
 extern GcodeSuite gcode;
+
+extern bool usb_serial_connected;
+

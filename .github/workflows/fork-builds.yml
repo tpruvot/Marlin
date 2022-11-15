@@ -49,6 +49,7 @@ jobs:
         #- teensy35
         #- teensy41
         #- SAMD51_grandcentral_m4
+        #- PANDA_PI_V29
 
         # Extended AVR Environments
 
@@ -82,7 +83,6 @@ jobs:
         #- STM32F103RET6_creality
         - STM32F103VE_longer
         #- STM32F407VE_black
-        #- STM32F401VE_STEVAL
         #- BIGTREE_BTT002
         #- BIGTREE_SKR_PRO
         #- BIGTREE_GTR_V1_0
@@ -101,6 +101,10 @@ jobs:
         #- REMRAM_V1
         #- BTT_SKR_SE_BX
         #- chitu_f103
+        #- Opulo_Lumen_REV3
+
+        # ESP32 environments
+        #- mks_tinybee
 
         # Put lengthy tests last
 

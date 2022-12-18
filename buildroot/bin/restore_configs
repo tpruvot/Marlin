@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
 
-rm -f Marlin/_Bootscreen.h Marlin/_Statusscreen.h marlin_config.json .pio/build/mc.zip
+cp config/default/Configuration*.h Marlin
 
-if [[ $1 == '-d' || $1 == '--default' ]]; then
-  use_example_configs
-else
-  git checkout Marlin/Configuration.h 2>/dev/null
-  git checkout Marlin/Configuration_adv.h 2>/dev/null
-  git checkout Marlin/src/pins/ramps/pins_RAMPS.h 2>/dev/null
-fi
+PINS="Marlin/src/pins"
+RAMPS="$PINS/ramps/pins_RAMPS.h"
+BKUP="$PINS/ramps/pins_RAMPS.backup.h"
+[ -f $BKUP ] && { cp "$BKUP" "$RAMPS" ; rm -f $BKUP ; }
+
+rm -f Marlin/_Bootscreen.h
+rm -f Marlin/_Statusscreen.h
+rm -f marlin_config.json .pio/build/mc.zip

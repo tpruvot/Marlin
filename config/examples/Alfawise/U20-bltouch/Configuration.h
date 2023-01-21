@@ -3268,7 +3268,7 @@
  *   TFT_ROTATE_270, TFT_ROTATE_270_MIRROR_X, TFT_ROTATE_270_MIRROR_Y,
  *   TFT_MIRROR_X, TFT_MIRROR_Y, TFT_NO_ROTATION
  */
-//#define TFT_ROTATION TFT_NO_ROTATION
+#define TFT_ROTATION TFT_NO_ROTATION
 
 //=============================================================================
 //============================  Other Controllers  ============================

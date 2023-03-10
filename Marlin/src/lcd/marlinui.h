@@ -480,7 +480,11 @@ public:
       #if HAS_SOUND
         static void completion_feedback(const bool good=true);
       #else
-        static void completion_feedback(const bool=true) { TERN_(HAS_TOUCH_SLEEP, wakeup_screen()); }
+        static void completion_feedback(const bool=true) {
+          TERN_(HAS_TOUCH_SLEEP, wakeup_screen());
+          // for top icons like RST, on config load/save/reset menu
+          TERN_(TFT_CLASSIC_UI, refresh(LCDVIEW_CALL_REDRAW_NEXT));
+        }
       #endif
 
       #if ENABLED(ADVANCED_PAUSE_FEATURE)

@@ -554,6 +554,10 @@ void menu_configuration() {
     EDIT_ITEM(uint8, MSG_SCREEN_TIMEOUT, &ui.sleep_timeout_minutes, ui.sleep_timeout_min, ui.sleep_timeout_max, ui.refresh_screen_timeout);
   #endif
 
+  #if ENABLED(TOUCH_SCREEN_CALIBRATION)
+    SUBMENU(MSG_TOUCHSCREEN, menu_touch_screen);
+  #endif
+
   #if ENABLED(FWRETRACT)
     SUBMENU(MSG_RETRACT, menu_config_retract);
   #endif

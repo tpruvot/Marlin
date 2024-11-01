@@ -30,7 +30,7 @@ void touch_screen_calibration() {
 
 void menu_touch_screen() {
   START_MENU();
-  BACK_ITEM(MSG_MAIN);
+  BACK_ITEM(MSG_MAIN_MENU);
   MENU_ITEM(submenu, MSG_CALIBRATION, touch_screen_calibration);
 #ifdef TS_V11
   STATIC_ITEM_F(F("ILI9341 v1.1"), SS_LEFT);

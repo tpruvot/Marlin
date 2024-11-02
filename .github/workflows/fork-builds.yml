@@ -42,7 +42,7 @@ jobs:
         #- DUE
         #- DUE_archim
         #- esp32
-        - linux_native
+        #- linux_native
         #- mega2560
         #- at90usb1286_dfu
         #- teensy31
@@ -148,7 +148,7 @@ jobs:
     - name: Install PlatformIO
       run: |
         pip install -U platformio
-        pio upgrade --dev
+        #pio upgrade --dev
         pio pkg update --global
 
     - name: Run ${{ matrix.test-platform }} Tests

@@ -2597,7 +2597,7 @@
  * you must uncomment the following option or it won't work.
  */
 #define SDSUPPORT
-#define SDIO_SUPPORT // Note from Hobi : Added as was not present in the file...
+#define ONBOARD_SDIO // seems required even with SDCARD_CONNECTION ONBOARD
 
 /**
  * SD CARD: ENABLE CRC

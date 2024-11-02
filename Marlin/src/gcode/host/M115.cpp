@@ -60,6 +60,8 @@
  */
 void GcodeSuite::M115() {
 
+  usb_serial_connected = true;
+
   SERIAL_ECHOPGM("FIRMWARE_NAME:Marlin"
     " " DETAILED_BUILD_VERSION " (" __DATE__ " " __TIME__ ")"
     " SOURCE_CODE_URL:" SOURCE_CODE_URL

@@ -2,11 +2,13 @@
 
 <h1 align="center">Marlin 3D Printer Firmware</h1>
 
+### for Longer3D LK1/LK1+/LK2/LK4 & Alfawise U20/U20+/U30 (with a STM32 F103VE Chip)
+
 <p align="center">
-    <a href="/LICENSE"><img alt="GPL-V3.0 License" src="https://img.shields.io/github/license/marlinfirmware/marlin.svg"></a>
-    <a href="https://github.com/MarlinFirmware/Marlin/graphs/contributors"><img alt="Contributors" src="https://img.shields.io/github/contributors/marlinfirmware/marlin.svg"></a>
+    <a href="/LICENSE"><img alt="GPL-V3.0 License" src="https://img.shields.io/github/license/tpruvot/marlin.svg"></a>
+    <a href="https://github.com/MarlinFirmware/Marlin/graphs/contributors"><img alt="Contributors" src="https://img.shields.io/github/contributors/tpruvot/marlin.svg"></a>
     <a href="https://github.com/MarlinFirmware/Marlin/releases"><img alt="Last Release Date" src="https://img.shields.io/github/release-date/MarlinFirmware/Marlin"></a>
-    <a href="https://github.com/MarlinFirmware/Marlin/actions"><img alt="CI Status" src="https://github.com/MarlinFirmware/Marlin/actions/workflows/test-builds.yml/badge.svg"></a>
+    <a href="https://github.com/tpruvot/Marlin/actions"><img alt="CI Status" src="https://github.com/tpruvot/Marlin/actions/workflows/fork-builds.yml/badge.svg"></a>
     <a href="https://github.com/sponsors/thinkyhead"><img alt="GitHub Sponsors" src="https://img.shields.io/github/sponsors/thinkyhead?color=db61a2"></a>
     <br />
     <a href="https://fosstodon.org/@marlinfirmware"><img alt="Follow MarlinFirmware on Mastodon" src="https://img.shields.io/mastodon/follow/109450200866020466?domain=https%3A%2F%2Ffosstodon.org&logoColor=%2300B&style=social"></a>
@@ -19,11 +21,15 @@ Please test this firmware and let us know if it misbehaves in any way. Volunteer
 
 Marlin 2.1 continues to support both 32-bit ARM and 8-bit AVR boards while adding support for up to 9 coordinated axes and to up to 8 extruders.
 
-Download earlier versions of Marlin on the [Releases page](https://github.com/MarlinFirmware/Marlin/releases).
+Download official versions of Marlin on the [Releases page](https://github.com/MarlinFirmware/Marlin/releases).
+
+Download earlier versions for the Longer LK Board on the [Custom Releases page](https://github.com/tpruvot/Marlin/releases).
 
 ## Example Configurations
 
 Before you can build Marlin for your machine you'll need a configuration for your specific hardware. Upon request, your vendor will be happy to provide you with the complete source code and configurations for your machine, but you'll need to get updated configuration files if you want to install a newer version of Marlin. Fortunately, Marlin users have contributed dozens of tested configurations to get you started. Visit the [MarlinFirmware/Configurations](https://github.com/MarlinFirmware/Configurations) repository to find the right configuration for your hardware.
+
+In this fork, they are stored in the git to keep config files compatibles with nightly or release versions.
 
 ## Building Marlin 2.1
 

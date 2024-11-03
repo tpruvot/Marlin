@@ -40,6 +40,8 @@
 
 class MarlinSettings {
   public:
+    bool was_reset;
+
     static uint16_t datasize();
 
     static void reset();

@@ -2593,7 +2593,6 @@
  * you must uncomment the following option or it won't work.
  */
 #define SDSUPPORT
-#define SDIO_SUPPORT // Note from Hobi : Added as was not present in the file...
 
 /**
  * SD CARD: ENABLE CRC

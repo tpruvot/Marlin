@@ -2597,7 +2597,6 @@
  * you must uncomment the following option or it won't work.
  */
 #define SDSUPPORT
-#define ONBOARD_SDIO // seems required even with SDCARD_CONNECTION ONBOARD
 
 /**
  * SD CARD: ENABLE CRC
